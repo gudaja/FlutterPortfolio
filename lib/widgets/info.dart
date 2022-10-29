@@ -5,7 +5,8 @@ import 'package:portfolio/utils/custom_colors.dart';
 class Info extends StatelessWidget {
   final double width;
   final double ratio;
-  const Info({required this.width,required this.ratio ,Key? key}) : super(key: key);
+  const Info({required this.width, required this.ratio, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class Info extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-              '• I’m studying informatics engineering at the University Of Aleppo.',
+              '• I’m studying informatics engineering at the Politechnika Krakowska.',
               style: GoogleFonts.getFont('Delius',
                   color: CustomColors.gray, fontSize: 13)),
           const SizedBox(height: 20),

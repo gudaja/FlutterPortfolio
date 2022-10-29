@@ -5,17 +5,16 @@ import 'package:portfolio/utils/custom_colors.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    systemNavigationBarColor:CustomColors.primary, 
-    statusBarColor: CustomColors.primary, 
+    systemNavigationBarColor: CustomColors.primary,
+    statusBarColor: CustomColors.primary,
   ));
-  runApp( MaterialApp(
-    theme: ThemeData(primaryColor:
-     CustomColors.primary,
-     splashColor: CustomColors.primary,
-     highlightColor:CustomColors.primary,
-     
-     ),
-    title: 'khalid-alsaleh-dev',
+  runApp(MaterialApp(
+    theme: ThemeData(
+      primaryColor: CustomColors.primary,
+      splashColor: CustomColors.primary,
+      highlightColor: CustomColors.primary,
+    ),
+    title: 'u#-dev',
     home: const Portfolio(),
     debugShowCheckedModeBanner: false,
   ));

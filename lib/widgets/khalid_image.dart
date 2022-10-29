@@ -15,7 +15,7 @@ class KhalidImage extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Container(
-          constraints:const BoxConstraints(maxWidth:370),
+          constraints: const BoxConstraints(maxWidth: 370),
           child: Image.asset(
             ImageAssetConstants.khalid,
             width: width * 0.29,
@@ -23,30 +23,67 @@ class KhalidImage extends StatelessWidget {
           ),
         ),
         Positioned(
+          top: width * 0.06,
+          left: 0,
+          child: CircleAvatar(
+            minRadius: 10.0,
+            maxRadius: 50.0,
+            backgroundColor: CustomColors.darkBackground,
+            child: CircleAvatar(
+              // radius: 40.0,
+              minRadius: 10.0,
+              maxRadius: 40.0,
+              backgroundColor: CustomColors.darkBackground,
+              child: Image.asset(
+                ImageAssetConstants.cppIcon,
+                width: width * 0.1,
+                height: width * 0.1,
+              ),
+            ),
+          ),
+        ),
+        Positioned(
           top: width * 0.17,
           left: 0,
-          child: Image.asset(
-            ImageAssetConstants.pythonCircle,
-            width: width * 0.07,
-            height: width * 0.07,
+          child: CircleAvatar(
+            // radius: 40.0,
+            minRadius: 10.0,
+            maxRadius: 50.0,
+            backgroundColor: CustomColors.darkBackground,
+            child: Image.asset(
+              ImageAssetConstants.python,
+              width: width * 0.1,
+              height: width * 0.1,
+            ),
           ),
         ),
         Positioned(
           top: width * 0.19,
           right: width * 0.010,
-          child: Image.asset(
-            ImageAssetConstants.flutterCircle,
-            width: width * 0.083,
-            height: width * 0.08,
+          child: CircleAvatar(
+            // radius: 40.0,
+            minRadius: 10.0,
+            maxRadius: 50.0,
+            backgroundColor: CustomColors.darkBackground,
+            child: Image.asset(
+              ImageAssetConstants.flutter,
+              width: width * 0.083,
+              height: width * 0.08,
+            ),
           ),
         ),
         Positioned(
           top: width * 0.06,
           right: width * 0.016,
-          child: Image.asset(
-            ImageAssetConstants.javaCircle,
-            width: width * 0.06,
-            height: width * 0.058,
+          child: CircleAvatar(
+            minRadius: 10.0,
+            maxRadius: 50.0,
+            backgroundColor: CustomColors.darkBackground,
+            child: Image.asset(
+              ImageAssetConstants.goIcon,
+              width: width * 0.06,
+              height: width * 0.058,
+            ),
           ),
         ),
         Positioned(

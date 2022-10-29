@@ -7,7 +7,8 @@ import 'package:portfolio/widgets/logo.dart';
 class Footer extends StatelessWidget {
   final double width;
   final ScrollController scrollController;
-  const Footer({required this.width,required this.scrollController, Key? key}) : super(key: key);
+  const Footer({required this.width, required this.scrollController, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,46 +19,42 @@ class Footer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-             Logo(width: width,scrollController: scrollController,),
-             const SizedBox(height:22),
-          width > Breakpoints.sm
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                   Text('Copyright © 2021 khalid-alsaleh-dev',
-                      style: GoogleFonts.getFont('Delius',
-                          color: CustomColors.gray,
-                          fontSize: 14)),
-                  Text('All rights reserved',
-                      style: GoogleFonts.getFont('Delius',
-                          color: CustomColors.gray,
-                          fontSize: 14)),
-                  Text('khalidlionel.2089@gmail.com',
-                      style: GoogleFonts.getFont('Delius',
-                          color: CustomColors.gray,
-                          fontSize: 14)),
-                ],
-              )
-            : Column(
-                children: [
-                  Text('Copyright © 2021 khalid-alsaleh-dev',
-                      style: GoogleFonts.getFont('Delius',
-                          color: CustomColors.gray,
-                          fontSize: 14)),
-                          const SizedBox(height: 10),
-                          Text(' All rights reserved',
-                      style: GoogleFonts.getFont('Delius',
-                          color: CustomColors.gray,
-                          fontSize: 14)),
-                  const SizedBox(height: 10),
-                  Text('khalidlionel.2089@gmail.com',
-                      style: GoogleFonts.getFont('Delius',
-                          color: CustomColors.gray,
-                          fontSize: 14)),
-                ],
-              ),
-             
-        ],)
-              );
+            Logo(
+              width: width,
+              scrollController: scrollController,
+            ),
+            const SizedBox(height: 22),
+            width > Breakpoints.sm
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text('Copyright © 2022 u#-dev',
+                          style: GoogleFonts.getFont('Delius',
+                              color: CustomColors.gray, fontSize: 14)),
+                      Text('All rights reserved',
+                          style: GoogleFonts.getFont('Delius',
+                              color: CustomColors.gray, fontSize: 14)),
+                      Text('lukasz.g150@gmail.com',
+                          style: GoogleFonts.getFont('Delius',
+                              color: CustomColors.gray, fontSize: 14)),
+                    ],
+                  )
+                : Column(
+                    children: [
+                      Text('Copyright © 2022 u#-dev',
+                          style: GoogleFonts.getFont('Delius',
+                              color: CustomColors.gray, fontSize: 14)),
+                      const SizedBox(height: 10),
+                      Text(' All rights reserved',
+                          style: GoogleFonts.getFont('Delius',
+                              color: CustomColors.gray, fontSize: 14)),
+                      const SizedBox(height: 10),
+                      Text('lukasz.g150@gmail.com',
+                          style: GoogleFonts.getFont('Delius',
+                              color: CustomColors.gray, fontSize: 14)),
+                    ],
+                  ),
+          ],
+        ));
   }
 }

@@ -38,7 +38,10 @@ class NavBar extends StatelessWidget {
     Widget navBarRow = Stack(children: [
       Padding(
         padding: EdgeInsets.only(left: width * 0.04),
-        child: Logo(width: width,scrollController: scrollController,),
+        child: Logo(
+          width: width,
+          scrollController: scrollController,
+        ),
       ),
       Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -62,18 +65,13 @@ class NavBar extends StatelessWidget {
           NavBarItemWithIcon(
             text: 'github',
             icon: ImageAssetConstants.github,
-            url: 'https://github.com/khalid-alsaleh-dev',
+            url: 'https://github.com/gudaja',
           ),
-          SizedBox(width: 10),
-          NavBarItemWithIcon(
-              text: 'facebook',
-              icon: ImageAssetConstants.facebook,
-              url: 'https://www.facebook.com/khalid.alsaleh.52090/'),
           SizedBox(width: 10),
           NavBarItemWithIcon(
               text: 'linkedIn',
               icon: ImageAssetConstants.linkedIn,
-              url: 'https://www.linkedin.com/in/khalid-al-saleh-3561881a8/'),
+              url: 'https://www.linkedin.com/in/lukasz-gorkiewicz-82336991/'),
           SizedBox(width: 50),
         ])
       ])
@@ -102,16 +100,12 @@ class NavBar extends StatelessWidget {
       NavBarItem(
           text: 'github',
           onTap: () async {
-            await launch('https://github.com/khalid-alsaleh-dev');
+            await launch('https://github.com/gudaja');
           }),
-      NavBarItem(
-          text: 'facebook',
-          onTap: () async =>
-              await launch('https://www.facebook.com/khalid.alsaleh.52090/')),
       NavBarItem(
           text: 'linkedIn',
           onTap: () async => await launch(
-              'https://www.linkedin.com/in/khalid-al-saleh-3561881a8/')),
+              'https://www.linkedin.com/in/lukasz-gorkiewicz-82336991/')),
     ];
     return Stack(
       children: [
@@ -142,7 +136,10 @@ class NavBar extends StatelessWidget {
                   children: [
                     Padding(
                         padding: EdgeInsets.only(left: width * 0.04),
-                        child: Logo(width: width,scrollController: scrollController,)),
+                        child: Logo(
+                          width: width,
+                          scrollController: scrollController,
+                        )),
                     NavBarButton(
                         onPressed: () {
                           if (collapsableHeight.value == 0.0) {

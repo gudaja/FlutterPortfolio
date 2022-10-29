@@ -7,8 +7,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 class Description extends StatelessWidget {
   final bool isVertical;
   final double width;
-  const Description(
-      {required this.isVertical, required this.width, Key? key})
+  const Description({required this.isVertical, required this.width, Key? key})
       : super(key: key);
 
   @override
@@ -46,17 +45,16 @@ class Description extends StatelessWidget {
               pause: const Duration(seconds: 2),
               animatedTexts: [
                 TyperAnimatedText(
-                    "I'm developing mobile,frontend and backend applications",
+                    "I'm developing embedded,mobile,frontend and backend applications",
                     textAlign: isVertical ? TextAlign.center : TextAlign.start,
                     textStyle: GoogleFonts.getFont('Delius',
-                        color: CustomColors.gray,
-                        fontSize: 15)),
+                        color: CustomColors.gray, fontSize: 15)),
               ],
             ),
           ),
           InkWell(
             onTap: () async => !await launch(
-                'https://mail.google.com/mail/u/0/?fs=1&to=khalidlionel.2089@gmail.com&tf=cm'),
+                'https://mail.google.com/mail/u/0/?fs=1&to=lukasz.g150@gmail.com&tf=cm'),
             child: Text("Let's chat",
                 style: GoogleFonts.getFont('Delius',
                     decoration: TextDecoration.underline,

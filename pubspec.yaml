@@ -41,3 +41,5 @@ flutter:
     - assets/images/java_circle.png
     - assets/images/python_circle.png
     - assets/images/backend_icon.png
+    - assets/images/cpp.png
+    - assets/images/go.png
