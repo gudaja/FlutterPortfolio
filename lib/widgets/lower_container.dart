@@ -105,15 +105,15 @@ class LowerContainer extends StatelessWidget {
                         SkillCard(
                             title: 'Backend Development',
                             description:
-                                'I’m developing backend applications using codnuit and spring boot with a good knowledge in nodejs.',
+                                'I’m developing backend applications using golang.',
                             icon: ImageAssetConstants.backendIcon,
                             width: 2 * width,
                             ratio: 0.45),
                         const SizedBox(height: 10),
                         SkillCard(
-                            title: 'Python Development',
+                            title: 'C++ Development',
                             description:
-                                'I’m developing maching learing and deep learning projects using standard python libraries and tensorflow api.',
+                                'I’m developing embedded projects for microcontrolers and linux platform.',
                             icon: ImageAssetConstants.python,
                             width: 2 * width,
                             ratio: 0.45),
