@@ -71,11 +71,30 @@ class _ModernSkillCardState extends State<ModernSkillCard>
     ));
 
     // Start progress animation after a small delay
-    Future.delayed(const Duration(milliseconds: 500), () {
-      if (mounted) {
-        _progressController.forward();
-      }
-    });
+    _startProgressAnimation();
+  }
+
+  void _startProgressAnimation() {
+    // Start animation immediately without delay
+    if (mounted) {
+      _progressController.forward();
+    }
+  }
+
+  @override
+  void didUpdateWidget(ModernSkillCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.progress != widget.progress) {
+      _progressController.reset();
+      _progressAnimation = Tween<double>(
+        begin: 0.0,
+        end: widget.progress,
+      ).animate(CurvedAnimation(
+        parent: _progressController,
+        curve: Curves.elasticOut,
+      ));
+      _startProgressAnimation();
+    }
   }
 
   @override
@@ -199,15 +218,16 @@ class _ModernSkillCardState extends State<ModernSkillCard>
                                     const SizedBox(height: 4),
                                     AnimatedBuilder(
                                       animation: _progressAnimation,
-                                      child: Text(
-                                        '${(_progressAnimation.value * 100).toInt()}%',
-                                        style: GoogleFonts.inter(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: widget.primaryColor,
-                                        ),
-                                      ),
-                                      builder: (context, child) => child!,
+                                      builder: (context, child) {
+                                        return Text(
+                                          '${(_progressAnimation.value * 100).toInt()}%',
+                                          style: GoogleFonts.inter(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: widget.primaryColor,
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ],
                                 ),

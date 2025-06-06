@@ -36,20 +36,20 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
       secondaryColor: CustomColors.primaryDark,
     ),
     SkillData(
-      title: 'Python',
+      title: 'C++',
       description:
-          'Backend development, AI/ML, automatyzacja. Django, FastAPI, data science.',
-      iconPath: 'assets/images/python.png',
+          'Performance-critical applications, game development, system programming, embedded systems.',
+      iconPath: 'assets/images/cpp.png',
       progress: 0.85,
       primaryColor: CustomColors.secondary,
       secondaryColor: CustomColors.secondaryDark,
     ),
     SkillData(
-      title: 'Java',
+      title: 'Golang',
       description:
-          'Enterprise development, Spring Boot, microservices, Android development.',
-      iconPath: 'assets/images/java.png',
-      progress: 0.8,
+          'Concurrent programming, microservices, cloud-native development, backend APIs.',
+      iconPath: 'assets/images/go.png',
+      progress: 0.88,
       primaryColor: CustomColors.accent,
       secondaryColor: CustomColors.accentDark,
     ),
