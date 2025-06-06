@@ -24,6 +24,7 @@ class _HeroSectionState extends State<HeroSection>
     with TickerProviderStateMixin {
   late AnimationController _fadeController;
   late AnimationController _slideController;
+  late AnimationController _particleController;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
 
@@ -36,6 +37,10 @@ class _HeroSectionState extends State<HeroSection>
     );
     _slideController = AnimationController(
       duration: const Duration(milliseconds: 2000),
+      vsync: this,
+    );
+    _particleController = AnimationController(
+      duration: const Duration(milliseconds: 5000),
       vsync: this,
     );
 
@@ -57,12 +62,14 @@ class _HeroSectionState extends State<HeroSection>
 
     _fadeController.forward();
     _slideController.forward();
+    _particleController.repeat(); // Nieskończona animacja!
   }
 
   @override
   void dispose() {
     _fadeController.dispose();
     _slideController.dispose();
+    _particleController.dispose();
     super.dispose();
   }
 
@@ -244,24 +251,26 @@ class _HeroSectionState extends State<HeroSection>
   }
 
   Widget _buildParticle(int index) {
-    return TweenAnimationBuilder<double>(
-      duration: Duration(milliseconds: 3000 + (index * 200)),
-      tween: Tween(begin: 0.0, end: 1.0),
-      builder: (context, value, child) {
+    return AnimatedBuilder(
+      animation: _particleController,
+      builder: (context, child) {
+        final screenHeight = MediaQuery.of(context).size.height;
+        final progress = (_particleController.value + index * 0.1) % 1.0;
+        final yPosition = -50 + (screenHeight + 100) * progress;
+
         return Positioned(
-          left: (index * 37.5) % widget.width,
-          top: (MediaQuery.of(context).size.height * value) %
-              MediaQuery.of(context).size.height,
+          left: (index * 45.0) % widget.width,
+          top: yPosition,
           child: Container(
-            width: 4,
-            height: 4,
+            width: 3 + (index % 3).toDouble(),
+            height: 3 + (index % 3).toDouble(),
             decoration: BoxDecoration(
-              color: CustomColors.primary.withOpacity(0.3),
+              color: CustomColors.primary.withOpacity(0.4 - (index % 4) * 0.05),
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: CustomColors.primary.withOpacity(0.5),
-                  blurRadius: 8,
+                  color: CustomColors.primary.withOpacity(0.3),
+                  blurRadius: 6,
                 ),
               ],
             ),
