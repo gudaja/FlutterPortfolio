@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:portfolio/utils/breakpoints.dart';
 import 'package:portfolio/utils/custom_colors.dart';
-import 'package:portfolio/widgets/footer.dart';
+import 'package:portfolio/widgets/contact_section.dart';
 import 'package:portfolio/widgets/hero_section.dart';
 import 'package:portfolio/widgets/modern_navbar.dart';
 import 'package:portfolio/widgets/modern_skill_card.dart';
@@ -239,11 +239,10 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
                       ),
                     ),
 
-                    // Footer
+                    // Contact Section
                     Container(
                       key: contactKey,
-                      child: Footer(
-                          width: width, scrollController: scrollController),
+                      child: ContactSection(width: width),
                     ),
                   ],
                 ),
