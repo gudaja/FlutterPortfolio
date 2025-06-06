@@ -79,7 +79,6 @@ class _ModernNavBarState extends State<ModernNavBar>
 
   void _updateActiveNavigation() {
     final scrollOffset = widget.scrollController.offset;
-    final screenHeight = MediaQuery.of(context).size.height;
 
     int newSelectedIndex = 0; // Default to Home
 
@@ -87,6 +86,7 @@ class _ModernNavBarState extends State<ModernNavBar>
     final aboutOffset = _getSectionOffset(widget.aboutKey);
     final skillsOffset = _getSectionOffset(widget.skillsKey);
     final interestsOffset = _getSectionOffset(widget.intrestsKey);
+    final contactOffset = _getSectionOffset(widget.contactKey);
 
     // Define sections with their positions
     final sections = <Map<String, dynamic>>[];
@@ -110,7 +110,9 @@ class _ModernNavBarState extends State<ModernNavBar>
     }
 
     // Contact section (footer area)
-    sections.add({'index': 4, 'offset': screenHeight * 3.0});
+    if (contactOffset > 0) {
+      sections.add({'index': 4, 'offset': contactOffset});
+    }
 
     // Find the current section based on scroll position
     for (int i = sections.length - 1; i >= 0; i--) {
@@ -421,10 +423,22 @@ class _ModernNavBarState extends State<ModernNavBar>
         }
         break;
       case 3: // Projects
-        // Add your projects section navigation
+        if (widget.intrestsKey.currentContext != null) {
+          Scrollable.ensureVisible(
+            widget.intrestsKey.currentContext!,
+            duration: const Duration(milliseconds: 700),
+            curve: Curves.easeInOut,
+          );
+        }
         break;
       case 4: // Contact
-        // Add your contact section navigation
+        if (widget.contactKey?.currentContext != null) {
+          Scrollable.ensureVisible(
+            widget.contactKey!.currentContext!,
+            duration: const Duration(milliseconds: 700),
+            curve: Curves.easeInOut,
+          );
+        }
         break;
     }
   }

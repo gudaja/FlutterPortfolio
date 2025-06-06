@@ -21,6 +21,7 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
   late final GlobalKey skillsKey;
   late final GlobalKey aboutKey;
   late final GlobalKey homeKey;
+  late final GlobalKey contactKey;
   late final ScrollController scrollController;
   late final RxBool showFloatingButton;
   late final AnimationController _fadeController;
@@ -81,6 +82,7 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
     skillsKey = GlobalKey();
     aboutKey = GlobalKey();
     homeKey = GlobalKey();
+    contactKey = GlobalKey();
     scrollController = ScrollController();
     showFloatingButton = false.obs;
 
@@ -188,6 +190,7 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
               skillsKey: skillsKey,
               intrestsKey: intrestsKey,
               aboutKey: aboutKey,
+              contactKey: contactKey,
               scrollController: scrollController,
             ),
 
@@ -237,7 +240,11 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
                     ),
 
                     // Footer
-                    Footer(width: width, scrollController: scrollController),
+                    Container(
+                      key: contactKey,
+                      child: Footer(
+                          width: width, scrollController: scrollController),
+                    ),
                   ],
                 ),
               ),
