@@ -3,6 +3,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:portfolio/utils/custom_colors.dart';
 import 'package:portfolio/widgets/social_media_links.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../l10n/app_localizations.dart';
 
 class HeroSection extends StatefulWidget {
   final double width;
@@ -75,6 +76,8 @@ class _HeroSectionState extends State<HeroSection>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       width: widget.width,
       height: MediaQuery.of(context).size.height,
@@ -100,7 +103,7 @@ class _HeroSectionState extends State<HeroSection>
                       shaderCallback: (bounds) =>
                           CustomColors.primaryGradient.createShader(bounds),
                       child: Text(
-                        'Cześć! 👋',
+                        l10n.hello,
                         style: GoogleFonts.inter(
                           fontSize: widget.width > 768 ? 24 : 18,
                           fontWeight: FontWeight.w600,
@@ -119,7 +122,7 @@ class _HeroSectionState extends State<HeroSection>
                       shaderCallback: (bounds) =>
                           CustomColors.primaryGradient.createShader(bounds),
                       child: Text(
-                        'Jestem [U#-dev]',
+                        l10n.iAm,
                         style: GoogleFonts.inter(
                           fontSize: widget.width > 768 ? 64 : 48,
                           fontWeight: FontWeight.bold,
@@ -142,7 +145,7 @@ class _HeroSectionState extends State<HeroSection>
                       child: AnimatedTextKit(
                         animatedTexts: [
                           TypewriterAnimatedText(
-                            'Flutter Developer',
+                            l10n.flutterDeveloper,
                             textStyle: GoogleFonts.inter(
                               fontSize: widget.width > 768 ? 32 : 24,
                               fontWeight: FontWeight.w600,
@@ -151,7 +154,7 @@ class _HeroSectionState extends State<HeroSection>
                             speed: const Duration(milliseconds: 100),
                           ),
                           TypewriterAnimatedText(
-                            'Mobile App Creator',
+                            l10n.mobileAppCreator,
                             textStyle: GoogleFonts.inter(
                               fontSize: widget.width > 768 ? 32 : 24,
                               fontWeight: FontWeight.w600,
@@ -160,7 +163,7 @@ class _HeroSectionState extends State<HeroSection>
                             speed: const Duration(milliseconds: 100),
                           ),
                           TypewriterAnimatedText(
-                            'UI/UX Enthusiast',
+                            l10n.uiUxEnthusiast,
                             textStyle: GoogleFonts.inter(
                               fontSize: widget.width > 768 ? 32 : 24,
                               fontWeight: FontWeight.w600,
@@ -183,8 +186,7 @@ class _HeroSectionState extends State<HeroSection>
                     child: Container(
                       constraints: const BoxConstraints(maxWidth: 600),
                       child: Text(
-                        'Passion meets code. Tworzę nowoczesne aplikacje mobilne '
-                        'które łączą doskonały design z funkcjonalnością.',
+                        l10n.heroDescription,
                         style: GoogleFonts.inter(
                           fontSize: widget.width > 768 ? 18 : 16,
                           color: CustomColors.textSecondary,
@@ -205,12 +207,12 @@ class _HeroSectionState extends State<HeroSection>
                       runSpacing: 16,
                       children: [
                         _buildCTAButton(
-                          'Zobacz Projekty',
+                          l10n.viewProjects,
                           CustomColors.primaryGradient,
                           widget.onProjectsPressed ?? () {},
                         ),
                         _buildCTAButton(
-                          'Skontaktuj się',
+                          l10n.contactMe,
                           CustomColors.secondaryGradient,
                           widget.onContactPressed ?? () {},
                           outlined: true,
@@ -227,7 +229,7 @@ class _HeroSectionState extends State<HeroSection>
                     child: Column(
                       children: [
                         Text(
-                          'Znajdź mnie w sieci',
+                          l10n.findMeOnline,
                           style: GoogleFonts.inter(
                             fontSize: 16,
                             color: CustomColors.textSecondary,

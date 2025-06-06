@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/utils/custom_colors.dart';
+import 'package:portfolio/providers/language_provider.dart';
+import 'package:portfolio/widgets/language_switcher.dart';
+import 'package:portfolio/l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ModernNavBar extends StatefulWidget {
   final double width;
@@ -33,13 +37,13 @@ class _ModernNavBarState extends State<ModernNavBar>
   bool _isScrolled = false;
   int _selectedIndex = 0;
 
-  final List<NavItem> _navItems = [
-    NavItem('Home', Icons.home_rounded),
-    NavItem('About', Icons.person_rounded),
-    NavItem('Skills', Icons.code_rounded),
-    NavItem('Projects', Icons.work_rounded),
-    NavItem('Contact', Icons.mail_rounded),
-  ];
+  List<NavItem> _getNavItems(AppLocalizations l10n) => [
+        NavItem(l10n.home, Icons.home_rounded),
+        NavItem(l10n.about, Icons.person_rounded),
+        NavItem(l10n.skills, Icons.code_rounded),
+        NavItem('Projects', Icons.work_rounded), // TODO: Add to translations
+        NavItem(l10n.contact, Icons.mail_rounded),
+      ];
 
   @override
   void initState() {
@@ -154,6 +158,8 @@ class _ModernNavBarState extends State<ModernNavBar>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return FadeTransition(
       opacity: _fadeAnimation,
       child: AnimatedContainer(
@@ -219,8 +225,26 @@ class _ModernNavBarState extends State<ModernNavBar>
 
                 // Navigation items (desktop)
                 if (widget.width > 768) ...[
-                  _buildDesktopNav(),
+                  _buildDesktopNav(l10n),
+                  const SizedBox(width: 16),
+                  // Language switcher
+                  Consumer<LanguageProvider>(
+                    builder: (context, languageProvider, child) {
+                      return LanguageSwitcher(
+                        languageProvider: languageProvider,
+                      );
+                    },
+                  ),
                 ] else ...[
+                  // Language switcher (mobile)
+                  Consumer<LanguageProvider>(
+                    builder: (context, languageProvider, child) {
+                      return LanguageSwitcher(
+                        languageProvider: languageProvider,
+                      );
+                    },
+                  ),
+                  const SizedBox(width: 12),
                   // Mobile menu button
                   _buildMobileMenuButton(),
                 ],
@@ -257,7 +281,8 @@ class _ModernNavBarState extends State<ModernNavBar>
     );
   }
 
-  Widget _buildDesktopNav() {
+  Widget _buildDesktopNav(AppLocalizations l10n) {
+    final navItems = _getNavItems(l10n);
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
@@ -277,7 +302,7 @@ class _ModernNavBarState extends State<ModernNavBar>
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: _navItems.asMap().entries.map((entry) {
+        children: navItems.asMap().entries.map((entry) {
           final index = entry.key;
           final item = entry.value;
           final isSelected = _selectedIndex == index;
@@ -454,6 +479,9 @@ class _ModernNavBarState extends State<ModernNavBar>
   }
 
   void _showMobileMenu() {
+    final l10n = AppLocalizations.of(context)!;
+    final navItems = _getNavItems(l10n);
+
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -474,7 +502,7 @@ class _ModernNavBarState extends State<ModernNavBar>
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
-            ..._navItems.asMap().entries.map((entry) {
+            ...navItems.asMap().entries.map((entry) {
               final index = entry.key;
               final item = entry.value;
 

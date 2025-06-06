@@ -21,6 +21,9 @@ class CustomColors {
   static const Color textSecondary = Color(0xffB8BCC8);
   static const Color textMuted = Color(0xff8892B0);
 
+  // Kolory tła kart
+  static const Color cardBackground = Color(0xff1E2A3A);
+
   // Gradients
   static const LinearGradient primaryGradient = LinearGradient(
     begin: Alignment.topLeft,
