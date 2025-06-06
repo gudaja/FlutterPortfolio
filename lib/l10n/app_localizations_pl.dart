@@ -81,4 +81,67 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get english => 'Angielski';
+
+  @override
+  String get aboutMeTitle => 'O mnie';
+
+  @override
+  String get aboutMeDescription =>
+      'Jestem pasjonatem technologii mobilnych z wieloletnim doświadczeniem w tworzeniu aplikacji Flutter. Specjalizuję się w przekształcaniu pomysłów w funkcjonalne, piękne aplikacje mobilne.';
+
+  @override
+  String get mySkillsTitle => 'Umiejętności';
+
+  @override
+  String get interestsTitle => 'Zainteresowania';
+
+  @override
+  String get flutterDevelopmentInterest => 'Flutter Development';
+
+  @override
+  String get uiUxDesignInterest => 'UI/UX Design';
+
+  @override
+  String get mobileAppsInterest => 'Aplikacje Mobilne';
+
+  @override
+  String get problemSolvingInterest => 'Rozwiązywanie Problemów';
+
+  @override
+  String get techInnovationInterest => 'Innowacje Technologiczne';
+
+  @override
+  String get codeQualityInterest => 'Jakość Kodu';
+
+  @override
+  String get copyrightText => 'Copyright © 2024 Portfolio';
+
+  @override
+  String get allRightsReserved => 'Wszelkie prawa zastrzeżone';
+
+  @override
+  String get madeWithText => 'Stworzone z';
+
+  @override
+  String get usingFlutterText => 'przy użyciu Flutter';
+
+  @override
+  String get flutterSkillDescription =>
+      'Cross-platform mobile development z Dart. Tworzenie nowoczesnych aplikacji iOS i Android.';
+
+  @override
+  String get cppSkillDescription =>
+      'Performance-critical applications, game development, system programming, embedded systems.';
+
+  @override
+  String get golangSkillDescription =>
+      'Concurrent programming, microservices, cloud-native development, backend APIs.';
+
+  @override
+  String get linuxSkillDescription =>
+      'System administration, shell scripting, server management, DevOps, automation.';
+
+  @override
+  String get embeddedSkillDescription =>
+      'Mikrokontrolery, IoT devices, real-time systems, firmware development, hardware integration.';
 }

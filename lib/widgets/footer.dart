@@ -4,6 +4,7 @@ import 'package:portfolio/utils/breakpoints.dart';
 import 'package:portfolio/utils/custom_colors.dart';
 import 'package:portfolio/widgets/logo.dart';
 import 'package:portfolio/widgets/social_media_links.dart';
+import 'package:portfolio/l10n/app_localizations.dart';
 
 class Footer extends StatelessWidget {
   final double width;
@@ -13,6 +14,8 @@ class Footer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -66,16 +69,16 @@ class Footer extends StatelessWidget {
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    _buildFooterText('Copyright © 2024 Portfolio'),
-                    _buildFooterText('All rights reserved'),
+                    _buildFooterText(l10n.copyrightText),
+                    _buildFooterText(l10n.allRightsReserved),
                     _buildFooterText('lukasz.g150@gmail.com'),
                   ],
                 )
               : Column(
                   children: [
-                    _buildFooterText('Copyright © 2024 Portfolio'),
+                    _buildFooterText(l10n.copyrightText),
                     const SizedBox(height: 8),
-                    _buildFooterText('All rights reserved'),
+                    _buildFooterText(l10n.allRightsReserved),
                     const SizedBox(height: 8),
                     _buildFooterText('lukasz.g150@gmail.com'),
                   ],
@@ -88,7 +91,7 @@ class Footer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Made with ',
+                '${l10n.madeWithText} ',
                 style: GoogleFonts.inter(
                   color: CustomColors.textMuted,
                   fontSize: 12,
@@ -100,7 +103,7 @@ class Footer extends StatelessWidget {
                 size: 14,
               ),
               Text(
-                ' using Flutter',
+                ' ${l10n.usingFlutterText}',
                 style: GoogleFonts.inter(
                   color: CustomColors.textMuted,
                   fontSize: 12,

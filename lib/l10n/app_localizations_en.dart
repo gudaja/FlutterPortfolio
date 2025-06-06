@@ -81,4 +81,67 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get english => 'English';
+
+  @override
+  String get aboutMeTitle => 'About Me';
+
+  @override
+  String get aboutMeDescription =>
+      'I\'m a passionate mobile technology enthusiast with years of experience in creating Flutter applications. I specialize in transforming ideas into functional, beautiful mobile applications.';
+
+  @override
+  String get mySkillsTitle => 'My Skills';
+
+  @override
+  String get interestsTitle => 'Interests';
+
+  @override
+  String get flutterDevelopmentInterest => 'Flutter Development';
+
+  @override
+  String get uiUxDesignInterest => 'UI/UX Design';
+
+  @override
+  String get mobileAppsInterest => 'Mobile Apps';
+
+  @override
+  String get problemSolvingInterest => 'Problem Solving';
+
+  @override
+  String get techInnovationInterest => 'Tech Innovation';
+
+  @override
+  String get codeQualityInterest => 'Code Quality';
+
+  @override
+  String get copyrightText => 'Copyright © 2024 Portfolio';
+
+  @override
+  String get allRightsReserved => 'All rights reserved';
+
+  @override
+  String get madeWithText => 'Made with';
+
+  @override
+  String get usingFlutterText => 'using Flutter';
+
+  @override
+  String get flutterSkillDescription =>
+      'Cross-platform mobile development with Dart. Creating modern iOS and Android applications.';
+
+  @override
+  String get cppSkillDescription =>
+      'Performance-critical applications, game development, system programming, embedded systems.';
+
+  @override
+  String get golangSkillDescription =>
+      'Concurrent programming, microservices, cloud-native development, backend APIs.';
+
+  @override
+  String get linuxSkillDescription =>
+      'System administration, shell scripting, server management, DevOps, automation.';
+
+  @override
+  String get embeddedSkillDescription =>
+      'Microcontrollers, IoT devices, real-time systems, firmware development, hardware integration.';
 }

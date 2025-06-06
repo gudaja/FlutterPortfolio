@@ -241,6 +241,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'English'**
   String get english;
+
+  /// No description provided for @aboutMeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About Me'**
+  String get aboutMeTitle;
+
+  /// No description provided for @aboutMeDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m a passionate mobile technology enthusiast with years of experience in creating Flutter applications. I specialize in transforming ideas into functional, beautiful mobile applications.'**
+  String get aboutMeDescription;
+
+  /// No description provided for @mySkillsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My Skills'**
+  String get mySkillsTitle;
+
+  /// No description provided for @interestsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Interests'**
+  String get interestsTitle;
+
+  /// No description provided for @flutterDevelopmentInterest.
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter Development'**
+  String get flutterDevelopmentInterest;
+
+  /// No description provided for @uiUxDesignInterest.
+  ///
+  /// In en, this message translates to:
+  /// **'UI/UX Design'**
+  String get uiUxDesignInterest;
+
+  /// No description provided for @mobileAppsInterest.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile Apps'**
+  String get mobileAppsInterest;
+
+  /// No description provided for @problemSolvingInterest.
+  ///
+  /// In en, this message translates to:
+  /// **'Problem Solving'**
+  String get problemSolvingInterest;
+
+  /// No description provided for @techInnovationInterest.
+  ///
+  /// In en, this message translates to:
+  /// **'Tech Innovation'**
+  String get techInnovationInterest;
+
+  /// No description provided for @codeQualityInterest.
+  ///
+  /// In en, this message translates to:
+  /// **'Code Quality'**
+  String get codeQualityInterest;
+
+  /// No description provided for @copyrightText.
+  ///
+  /// In en, this message translates to:
+  /// **'Copyright © 2024 Portfolio'**
+  String get copyrightText;
+
+  /// No description provided for @allRightsReserved.
+  ///
+  /// In en, this message translates to:
+  /// **'All rights reserved'**
+  String get allRightsReserved;
+
+  /// No description provided for @madeWithText.
+  ///
+  /// In en, this message translates to:
+  /// **'Made with'**
+  String get madeWithText;
+
+  /// No description provided for @usingFlutterText.
+  ///
+  /// In en, this message translates to:
+  /// **'using Flutter'**
+  String get usingFlutterText;
+
+  /// No description provided for @flutterSkillDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Cross-platform mobile development with Dart. Creating modern iOS and Android applications.'**
+  String get flutterSkillDescription;
+
+  /// No description provided for @cppSkillDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Performance-critical applications, game development, system programming, embedded systems.'**
+  String get cppSkillDescription;
+
+  /// No description provided for @golangSkillDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Concurrent programming, microservices, cloud-native development, backend APIs.'**
+  String get golangSkillDescription;
+
+  /// No description provided for @linuxSkillDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'System administration, shell scripting, server management, DevOps, automation.'**
+  String get linuxSkillDescription;
+
+  /// No description provided for @embeddedSkillDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Microcontrollers, IoT devices, real-time systems, firmware development, hardware integration.'**
+  String get embeddedSkillDescription;
 }
 
 class _AppLocalizationsDelegate

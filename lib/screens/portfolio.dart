@@ -6,6 +6,7 @@ import 'package:portfolio/widgets/contact_section.dart';
 import 'package:portfolio/widgets/hero_section.dart';
 import 'package:portfolio/widgets/modern_navbar.dart';
 import 'package:portfolio/widgets/modern_skill_card.dart';
+import 'package:portfolio/l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Portfolio extends StatefulWidget {
@@ -27,54 +28,49 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
   late final AnimationController _fadeController;
   late final Animation<double> _fadeAnimation;
 
-  final List<SkillData> skills = [
-    SkillData(
-      title: 'Flutter',
-      description:
-          'Cross-platform mobile development z Dart. Tworzenie nowoczesnych aplikacji iOS i Android.',
-      iconPath: 'assets/images/flutter.png',
-      progress: 0.9,
-      primaryColor: CustomColors.primary,
-      secondaryColor: CustomColors.primaryDark,
-    ),
-    SkillData(
-      title: 'C++',
-      description:
-          'Performance-critical applications, game development, system programming, embedded systems.',
-      iconPath: 'assets/images/cpp.png',
-      progress: 0.85,
-      primaryColor: CustomColors.secondary,
-      secondaryColor: CustomColors.secondaryDark,
-    ),
-    SkillData(
-      title: 'Golang',
-      description:
-          'Concurrent programming, microservices, cloud-native development, backend APIs.',
-      iconPath: 'assets/images/go.png',
-      progress: 0.88,
-      primaryColor: CustomColors.accent,
-      secondaryColor: CustomColors.accentDark,
-    ),
-    SkillData(
-      title: 'Linux Developer',
-      description:
-          'System administration, shell scripting, server management, DevOps, automation.',
-      iconPath: 'assets/images/python.png', // Tymczasowo używamy python.png
-      progress: 0.92,
-      primaryColor: CustomColors.purple,
-      secondaryColor: const Color(0xff4A148C),
-    ),
-    SkillData(
-      title: 'Embedded Developer',
-      description:
-          'Mikrokontrolery, IoT devices, real-time systems, firmware development, hardware integration.',
-      iconPath:
-          'assets/images/backend_icon.png', // Tymczasowo używamy backend_icon.png
-      progress: 0.83,
-      primaryColor: const Color(0xffFF7043),
-      secondaryColor: const Color(0xffD84315),
-    ),
-  ];
+  List<SkillData> _getSkills(AppLocalizations l10n) => [
+        SkillData(
+          title: 'Flutter',
+          description: l10n.flutterSkillDescription,
+          iconPath: 'assets/images/flutter.png',
+          progress: 0.9,
+          primaryColor: CustomColors.primary,
+          secondaryColor: CustomColors.primaryDark,
+        ),
+        SkillData(
+          title: 'C++',
+          description: l10n.cppSkillDescription,
+          iconPath: 'assets/images/cpp.png',
+          progress: 0.85,
+          primaryColor: CustomColors.secondary,
+          secondaryColor: CustomColors.secondaryDark,
+        ),
+        SkillData(
+          title: 'Golang',
+          description: l10n.golangSkillDescription,
+          iconPath: 'assets/images/go.png',
+          progress: 0.88,
+          primaryColor: CustomColors.accent,
+          secondaryColor: CustomColors.accentDark,
+        ),
+        SkillData(
+          title: 'Linux Developer',
+          description: l10n.linuxSkillDescription,
+          iconPath: 'assets/images/python.png', // Tymczasowo używamy python.png
+          progress: 0.92,
+          primaryColor: CustomColors.purple,
+          secondaryColor: const Color(0xff4A148C),
+        ),
+        SkillData(
+          title: 'Embedded Developer',
+          description: l10n.embeddedSkillDescription,
+          iconPath:
+              'assets/images/backend_icon.png', // Tymczasowo używamy backend_icon.png
+          progress: 0.83,
+          primaryColor: const Color(0xffFF7043),
+          secondaryColor: const Color(0xffD84315),
+        ),
+      ];
 
   @override
   void initState() {
@@ -99,38 +95,7 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
       curve: Curves.easeInOut,
     ));
 
-    interests = [
-      {
-        'intrest': 'Flutter Development',
-        'color': CustomColors.primary,
-        'textColor': CustomColors.darkBackground,
-      },
-      {
-        'intrest': 'UI/UX Design',
-        'color': CustomColors.secondary,
-        'textColor': CustomColors.textPrimary,
-      },
-      {
-        'intrest': 'Mobile Apps',
-        'color': CustomColors.accent,
-        'textColor': CustomColors.darkBackground,
-      },
-      {
-        'intrest': 'Problem Solving',
-        'color': CustomColors.purple,
-        'textColor': CustomColors.textPrimary,
-      },
-      {
-        'intrest': 'Tech Innovation',
-        'color': CustomColors.primary,
-        'textColor': CustomColors.darkBackground,
-      },
-      {
-        'intrest': 'Code Quality',
-        'color': CustomColors.secondary,
-        'textColor': CustomColors.textPrimary,
-      },
-    ];
+    interests = [];
 
     scrollController.addListener(() {
       if (scrollController.offset >= Breakpoints.floatingButton) {
@@ -144,9 +109,45 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
     super.initState();
   }
 
+  List<Map> _getInterests(AppLocalizations l10n) => [
+        {
+          'intrest': l10n.flutterDevelopmentInterest,
+          'color': CustomColors.primary,
+          'textColor': CustomColors.darkBackground,
+        },
+        {
+          'intrest': l10n.uiUxDesignInterest,
+          'color': CustomColors.secondary,
+          'textColor': CustomColors.textPrimary,
+        },
+        {
+          'intrest': l10n.mobileAppsInterest,
+          'color': CustomColors.accent,
+          'textColor': CustomColors.darkBackground,
+        },
+        {
+          'intrest': l10n.problemSolvingInterest,
+          'color': CustomColors.purple,
+          'textColor': CustomColors.textPrimary,
+        },
+        {
+          'intrest': l10n.techInnovationInterest,
+          'color': CustomColors.primary,
+          'textColor': CustomColors.darkBackground,
+        },
+        {
+          'intrest': l10n.codeQualityInterest,
+          'color': CustomColors.secondary,
+          'textColor': CustomColors.textPrimary,
+        },
+      ];
+
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     double width = MediaQuery.of(context).size.width;
+    final skills = _getSkills(l10n);
+    final localInterests = _getInterests(l10n);
 
     return Scaffold(
       backgroundColor: CustomColors.darkBackground,
@@ -228,19 +229,20 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
                     // About Section
                     Container(
                       key: aboutKey,
-                      child: _buildAboutSection(width),
+                      child: _buildAboutSection(width, l10n),
                     ),
 
                     // Skills Section
                     Container(
                       key: skillsKey,
-                      child: _buildSkillsSection(width),
+                      child: _buildSkillsSection(width, l10n, skills),
                     ),
 
                     // Interests Section
                     Container(
                       key: intrestsKey,
-                      child: _buildInterestsSection(width),
+                      child:
+                          _buildInterestsSection(width, l10n, localInterests),
                     ),
 
                     // Divider
@@ -276,7 +278,7 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildAboutSection(double width) {
+  Widget _buildAboutSection(double width, AppLocalizations l10n) {
     return FadeTransition(
       opacity: _fadeAnimation,
       child: Container(
@@ -285,7 +287,7 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
         child: Column(
           children: [
             Text(
-              'O mnie',
+              l10n.aboutMeTitle,
               style: GoogleFonts.inter(
                 fontSize: width > 768 ? 48 : 36,
                 fontWeight: FontWeight.bold,
@@ -296,9 +298,7 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
             Container(
               constraints: const BoxConstraints(maxWidth: 800),
               child: Text(
-                'Jestem pasjonatem technologii mobilnych z wieloletnim doświadczeniem '
-                'w tworzeniu aplikacji Flutter. Specjalizuję się w przekształcaniu '
-                'pomysłów w funkcjonalne, piękne aplikacje mobilne.',
+                l10n.aboutMeDescription,
                 style: GoogleFonts.inter(
                   fontSize: width > 768 ? 18 : 16,
                   color: CustomColors.textSecondary,
@@ -313,14 +313,15 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildSkillsSection(double width) {
+  Widget _buildSkillsSection(
+      double width, AppLocalizations l10n, List<SkillData> skills) {
     return Container(
       width: width,
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 80),
       child: Column(
         children: [
           Text(
-            'Umiejętności',
+            l10n.mySkillsTitle,
             style: GoogleFonts.inter(
               fontSize: width > 768 ? 48 : 36,
               fontWeight: FontWeight.bold,
@@ -420,14 +421,15 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildInterestsSection(double width) {
+  Widget _buildInterestsSection(
+      double width, AppLocalizations l10n, List<Map> interests) {
     return Container(
       width: width,
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 80),
       child: Column(
         children: [
           Text(
-            'Zainteresowania',
+            l10n.interestsTitle,
             style: GoogleFonts.inter(
               fontSize: width > 768 ? 48 : 36,
               fontWeight: FontWeight.bold,
