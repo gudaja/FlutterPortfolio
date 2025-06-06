@@ -6,8 +6,15 @@ import 'package:google_fonts/google_fonts.dart';
 
 class HeroSection extends StatefulWidget {
   final double width;
+  final VoidCallback? onProjectsPressed;
+  final VoidCallback? onContactPressed;
 
-  const HeroSection({super.key, required this.width});
+  const HeroSection({
+    super.key,
+    required this.width,
+    this.onProjectsPressed,
+    this.onContactPressed,
+  });
 
   @override
   State<HeroSection> createState() => _HeroSectionState();
@@ -193,12 +200,12 @@ class _HeroSectionState extends State<HeroSection>
                         _buildCTAButton(
                           'Zobacz Projekty',
                           CustomColors.primaryGradient,
-                          () {},
+                          widget.onProjectsPressed ?? () {},
                         ),
                         _buildCTAButton(
                           'Skontaktuj się',
                           CustomColors.secondaryGradient,
-                          () {},
+                          widget.onContactPressed ?? () {},
                           outlined: true,
                         ),
                       ],

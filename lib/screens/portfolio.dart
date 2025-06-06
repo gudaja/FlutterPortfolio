@@ -201,7 +201,29 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
                 child: Column(
                   children: [
                     // Hero Section
-                    HeroSection(width: width),
+                    HeroSection(
+                      width: width,
+                      onProjectsPressed: () {
+                        // Scroll to interests/projects section
+                        if (intrestsKey.currentContext != null) {
+                          Scrollable.ensureVisible(
+                            intrestsKey.currentContext!,
+                            duration: const Duration(milliseconds: 700),
+                            curve: Curves.easeInOut,
+                          );
+                        }
+                      },
+                      onContactPressed: () {
+                        // Scroll to contact section
+                        if (contactKey.currentContext != null) {
+                          Scrollable.ensureVisible(
+                            contactKey.currentContext!,
+                            duration: const Duration(milliseconds: 700),
+                            curve: Curves.easeInOut,
+                          );
+                        }
+                      },
+                    ),
 
                     // About Section
                     Container(

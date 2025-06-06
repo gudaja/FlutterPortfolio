@@ -418,10 +418,17 @@ class _ModernNavBarState extends State<ModernNavBar>
           );
         }
         break;
-      case 3: // Projects
+      case 3: // Projects (Interests section)
         if (widget.intrestsKey.currentContext != null) {
           Scrollable.ensureVisible(
             widget.intrestsKey.currentContext!,
+            duration: const Duration(milliseconds: 700),
+            curve: Curves.easeInOut,
+          );
+        } else {
+          // Fallback: scroll to a calculated position
+          widget.scrollController.animateTo(
+            MediaQuery.of(context).size.height * 2.0,
             duration: const Duration(milliseconds: 700),
             curve: Curves.easeInOut,
           );
@@ -431,6 +438,13 @@ class _ModernNavBarState extends State<ModernNavBar>
         if (widget.contactKey?.currentContext != null) {
           Scrollable.ensureVisible(
             widget.contactKey!.currentContext!,
+            duration: const Duration(milliseconds: 700),
+            curve: Curves.easeInOut,
+          );
+        } else {
+          // Fallback: scroll to bottom
+          widget.scrollController.animateTo(
+            widget.scrollController.position.maxScrollExtent,
             duration: const Duration(milliseconds: 700),
             curve: Curves.easeInOut,
           );
