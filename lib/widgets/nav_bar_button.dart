@@ -17,11 +17,10 @@ class NavBarButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         elevation: 4.0,
         shape: const CircleBorder(),
-        padding: EdgeInsets.all(width >= Breakpoints.md? 0.03 * width : 0.03 * 762),
-        primary:
-            CustomColors.darkBackground, // <-- Button color
-        onPrimary:
-            CustomColors.brightBackground, // <-- Splash color
+        padding:
+            EdgeInsets.all(width >= Breakpoints.md ? 0.03 * width : 0.03 * 762),
+        backgroundColor: CustomColors.darkBackground, // <-- Button color
+        foregroundColor: CustomColors.brightBackground, // <-- Splash color
       ),
     );
   }
