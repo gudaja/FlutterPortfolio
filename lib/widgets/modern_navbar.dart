@@ -62,14 +62,10 @@ class _ModernNavBarState extends State<ModernNavBar>
   }
 
   void _onScroll() {
-    // Update sticky navbar visibility
-    if (widget.scrollController.offset > 100 && !_isScrolled) {
+    // TEMPORARY: Force navbar to always be in scrolled state for debugging
+    if (!_isScrolled) {
       setState(() {
         _isScrolled = true;
-      });
-    } else if (widget.scrollController.offset <= 100 && _isScrolled) {
-      setState(() {
-        _isScrolled = false;
       });
     }
 
