@@ -355,6 +355,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Microcontrollers, IoT devices, real-time systems, firmware development, hardware integration.'**
   String get embeddedSkillDescription;
+
+  /// No description provided for @contactTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get in touch'**
+  String get contactTitle;
+
+  /// No description provided for @contactSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Always open to new opportunities and interesting projects'**
+  String get contactSubtitle;
+
+  /// No description provided for @findMeOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Or find me on'**
+  String get findMeOn;
+
+  /// No description provided for @emailCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Email copied to clipboard!'**
+  String get emailCopied;
+
+  /// No description provided for @clickToCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Click to copy'**
+  String get clickToCopy;
+
+  /// No description provided for @location.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get location;
+
+  /// No description provided for @polandKrakow.
+  ///
+  /// In en, this message translates to:
+  /// **'Poland, Kraków'**
+  String get polandKrakow;
+
+  /// No description provided for @openToRemote.
+  ///
+  /// In en, this message translates to:
+  /// **'Open to remote work'**
+  String get openToRemote;
+
+  /// No description provided for @copyrightFullText.
+  ///
+  /// In en, this message translates to:
+  /// **'© 2024 Łukasz Górkiewicz. All rights reserved.'**
+  String get copyrightFullText;
 }
 
 class _AppLocalizationsDelegate

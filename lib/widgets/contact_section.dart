@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/utils/custom_colors.dart';
 import 'package:portfolio/widgets/social_media_links.dart';
+import 'package:portfolio/l10n/app_localizations.dart';
 
 class ContactSection extends StatefulWidget {
   final double width;
@@ -72,6 +73,7 @@ class _ContactSectionState extends State<ContactSection>
   }
 
   Future<void> _copyEmail() async {
+    final l10n = AppLocalizations.of(context)!;
     await Clipboard.setData(const ClipboardData(text: 'lukasz.g150@gmail.com'));
 
     _emailController.forward().then((_) {
@@ -91,7 +93,7 @@ class _ContactSectionState extends State<ContactSection>
               ),
               const SizedBox(width: 8),
               Text(
-                'Email skopiowany do schowka!',
+                l10n.emailCopied,
                 style: GoogleFonts.inter(
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
@@ -113,6 +115,8 @@ class _ContactSectionState extends State<ContactSection>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       width: widget.width,
       decoration: const BoxDecoration(
@@ -141,7 +145,7 @@ class _ContactSectionState extends State<ContactSection>
                   children: [
                     // Section Title
                     Text(
-                      'Skontaktuj się ze mną',
+                      l10n.contactTitle,
                       style: GoogleFonts.inter(
                         fontSize: widget.width > 768 ? 48 : 36,
                         fontWeight: FontWeight.bold,
@@ -153,7 +157,7 @@ class _ContactSectionState extends State<ContactSection>
                     const SizedBox(height: 16),
 
                     Text(
-                      'Zawsze otwarty na nowe możliwości i ciekawe projekty',
+                      l10n.contactSubtitle,
                       style: GoogleFonts.inter(
                         fontSize: widget.width > 768 ? 20 : 16,
                         color: CustomColors.textSecondary,
@@ -165,9 +169,9 @@ class _ContactSectionState extends State<ContactSection>
 
                     // Contact Methods
                     if (widget.width > 768)
-                      _buildDesktopContactLayout()
+                      _buildDesktopContactLayout(l10n)
                     else
-                      _buildMobileContactLayout(),
+                      _buildMobileContactLayout(l10n),
 
                     const SizedBox(height: 60),
 
@@ -175,7 +179,7 @@ class _ContactSectionState extends State<ContactSection>
                     Column(
                       children: [
                         Text(
-                          'Lub znajdź mnie na',
+                          l10n.findMeOn,
                           style: GoogleFonts.inter(
                             fontSize: 16,
                             color: CustomColors.textSecondary,
@@ -212,7 +216,7 @@ class _ContactSectionState extends State<ContactSection>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Made with ',
+                          '${l10n.madeWithText} ',
                           style: GoogleFonts.inter(
                             color: CustomColors.textMuted,
                             fontSize: 14,
@@ -224,7 +228,7 @@ class _ContactSectionState extends State<ContactSection>
                           size: 16,
                         ),
                         Text(
-                          ' using Flutter',
+                          ' ${l10n.usingFlutterText}',
                           style: GoogleFonts.inter(
                             color: CustomColors.textMuted,
                             fontSize: 14,
@@ -236,7 +240,7 @@ class _ContactSectionState extends State<ContactSection>
                     const SizedBox(height: 16),
 
                     Text(
-                      '© 2024 Łukasz Góralczyk. All rights reserved.',
+                      l10n.copyrightFullText,
                       style: GoogleFonts.inter(
                         color: CustomColors.textMuted,
                         fontSize: 12,
@@ -253,27 +257,27 @@ class _ContactSectionState extends State<ContactSection>
     );
   }
 
-  Widget _buildDesktopContactLayout() {
+  Widget _buildDesktopContactLayout(AppLocalizations l10n) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _buildEmailCard(),
-        _buildPhoneCard(),
+        _buildEmailCard(l10n),
+        _buildPhoneCard(l10n),
       ],
     );
   }
 
-  Widget _buildMobileContactLayout() {
+  Widget _buildMobileContactLayout(AppLocalizations l10n) {
     return Column(
       children: [
-        _buildEmailCard(),
+        _buildEmailCard(l10n),
         const SizedBox(height: 24),
-        _buildPhoneCard(),
+        _buildPhoneCard(l10n),
       ],
     );
   }
 
-  Widget _buildEmailCard() {
+  Widget _buildEmailCard(AppLocalizations l10n) {
     return AnimatedBuilder(
       animation: _emailScaleAnimation,
       builder: (context, child) {
@@ -365,7 +369,7 @@ class _ContactSectionState extends State<ContactSection>
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            'Kliknij aby skopiować',
+                            l10n.clickToCopy,
                             style: GoogleFonts.inter(
                               fontSize: 12,
                               color: CustomColors.textSecondary,
@@ -384,7 +388,7 @@ class _ContactSectionState extends State<ContactSection>
     );
   }
 
-  Widget _buildPhoneCard() {
+  Widget _buildPhoneCard(AppLocalizations l10n) {
     return Container(
       constraints: BoxConstraints(
         maxWidth: widget.width > 768 ? 300 : double.infinity,
@@ -444,7 +448,7 @@ class _ContactSectionState extends State<ContactSection>
             ),
             const SizedBox(height: 20),
             Text(
-              'Lokalizacja',
+              l10n.location,
               style: GoogleFonts.inter(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -453,7 +457,7 @@ class _ContactSectionState extends State<ContactSection>
             ),
             const SizedBox(height: 8),
             Text(
-              'Polska, Kraków',
+              l10n.polandKrakow,
               style: GoogleFonts.inter(
                 fontSize: 16,
                 color: CustomColors.secondary,
@@ -463,7 +467,7 @@ class _ContactSectionState extends State<ContactSection>
             ),
             const SizedBox(height: 12),
             Text(
-              'Otwarty na pracę zdalną',
+              l10n.openToRemote,
               style: GoogleFonts.inter(
                 fontSize: 12,
                 color: CustomColors.textSecondary,

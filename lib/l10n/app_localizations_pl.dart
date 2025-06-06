@@ -144,4 +144,33 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get embeddedSkillDescription =>
       'Mikrokontrolery, IoT devices, real-time systems, firmware development, hardware integration.';
+
+  @override
+  String get contactTitle => 'Skontaktuj się ze mną';
+
+  @override
+  String get contactSubtitle =>
+      'Zawsze otwarty na nowe możliwości i ciekawe projekty';
+
+  @override
+  String get findMeOn => 'Lub znajdź mnie na';
+
+  @override
+  String get emailCopied => 'Email skopiowany do schowka!';
+
+  @override
+  String get clickToCopy => 'Kliknij aby skopiować';
+
+  @override
+  String get location => 'Lokalizacja';
+
+  @override
+  String get polandKrakow => 'Polska, Kraków';
+
+  @override
+  String get openToRemote => 'Otwarty na pracę zdalną';
+
+  @override
+  String get copyrightFullText =>
+      '© 2024 Łukasz Górkiewicz. Wszelkie prawa zastrzeżone.';
 }

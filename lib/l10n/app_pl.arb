@@ -42,5 +42,14 @@
   "cppSkillDescription": "Performance-critical applications, game development, system programming, embedded systems.",
   "golangSkillDescription": "Concurrent programming, microservices, cloud-native development, backend APIs.",
   "linuxSkillDescription": "System administration, shell scripting, server management, DevOps, automation.",
-  "embeddedSkillDescription": "Mikrokontrolery, IoT devices, real-time systems, firmware development, hardware integration."
+  "embeddedSkillDescription": "Mikrokontrolery, IoT devices, real-time systems, firmware development, hardware integration.",
+  "contactTitle": "Skontaktuj się ze mną",
+  "contactSubtitle": "Zawsze otwarty na nowe możliwości i ciekawe projekty",
+  "findMeOn": "Lub znajdź mnie na",
+  "emailCopied": "Email skopiowany do schowka!",
+  "clickToCopy": "Kliknij aby skopiować",
+  "location": "Lokalizacja",
+  "polandKrakow": "Polska, Kraków",
+  "openToRemote": "Otwarty na pracę zdalną",
+  "copyrightFullText": "© 2024 Łukasz Górkiewicz. Wszelkie prawa zastrzeżone."
 } 
