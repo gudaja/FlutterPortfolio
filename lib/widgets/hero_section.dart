@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:portfolio/utils/custom_colors.dart';
+import 'package:portfolio/widgets/social_media_links.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HeroSection extends StatefulWidget {
@@ -199,6 +200,29 @@ class _HeroSectionState extends State<HeroSection>
                           CustomColors.secondaryGradient,
                           () {},
                           outlined: true,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 32),
+
+                  // Social Media Links
+                  FadeTransition(
+                    opacity: _fadeAnimation,
+                    child: Column(
+                      children: [
+                        Text(
+                          'Znajdź mnie w sieci',
+                          style: GoogleFonts.inter(
+                            fontSize: 16,
+                            color: CustomColors.textSecondary,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        const SocialMediaLinks(
+                          iconSize: 28,
                         ),
                       ],
                     ),
