@@ -53,6 +53,25 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
       primaryColor: CustomColors.accent,
       secondaryColor: CustomColors.accentDark,
     ),
+    SkillData(
+      title: 'Linux Developer',
+      description:
+          'System administration, shell scripting, server management, DevOps, automation.',
+      iconPath: 'assets/images/python.png', // Tymczasowo używamy python.png
+      progress: 0.92,
+      primaryColor: CustomColors.purple,
+      secondaryColor: const Color(0xff4A148C),
+    ),
+    SkillData(
+      title: 'Embedded Developer',
+      description:
+          'Mikrokontrolery, IoT devices, real-time systems, firmware development, hardware integration.',
+      iconPath:
+          'assets/images/backend_icon.png', // Tymczasowo używamy backend_icon.png
+      progress: 0.83,
+      primaryColor: const Color(0xffFF7043),
+      secondaryColor: const Color(0xffD84315),
+    ),
   ];
 
   @override
@@ -274,26 +293,76 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
           const SizedBox(height: 48),
 
           // Skills Grid
-          if (width > 768)
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          if (width > 1200)
+            // Desktop - 3 karty w pierwszym rzędzie, 2 w drugim
+            Column(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: skills.take(3).map((skill) {
+                    return Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: ModernSkillCard(
+                          title: skill.title,
+                          description: skill.description,
+                          iconPath: skill.iconPath,
+                          progress: skill.progress,
+                          primaryColor: skill.primaryColor,
+                          secondaryColor: skill.secondaryColor,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Expanded(flex: 1, child: SizedBox()),
+                    ...skills.skip(3).map((skill) {
+                      return Expanded(
+                        flex: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: ModernSkillCard(
+                            title: skill.title,
+                            description: skill.description,
+                            iconPath: skill.iconPath,
+                            progress: skill.progress,
+                            primaryColor: skill.primaryColor,
+                            secondaryColor: skill.secondaryColor,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                    const Expanded(flex: 1, child: SizedBox()),
+                  ],
+                ),
+              ],
+            )
+          else if (width > 768)
+            // Tablet - 2 karty na rząd
+            Wrap(
+              alignment: WrapAlignment.center,
               children: skills.map((skill) {
-                return Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: ModernSkillCard(
-                      title: skill.title,
-                      description: skill.description,
-                      iconPath: skill.iconPath,
-                      progress: skill.progress,
-                      primaryColor: skill.primaryColor,
-                      secondaryColor: skill.secondaryColor,
-                    ),
+                return Container(
+                  width: (width - 96) / 2, // 32*2 padding + 32 spacing
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                  child: ModernSkillCard(
+                    title: skill.title,
+                    description: skill.description,
+                    iconPath: skill.iconPath,
+                    progress: skill.progress,
+                    primaryColor: skill.primaryColor,
+                    secondaryColor: skill.secondaryColor,
                   ),
                 );
               }).toList(),
             )
           else
+            // Mobile - pojedyncze kolumny
             Column(
               children: skills.map((skill) {
                 return Padding(
