@@ -19,6 +19,7 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
   late final List<Map> interests;
   late final GlobalKey intrestsKey;
   late final GlobalKey skillsKey;
+  late final GlobalKey aboutKey;
   late final GlobalKey homeKey;
   late final ScrollController scrollController;
   late final RxBool showFloatingButton;
@@ -78,6 +79,7 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
   void initState() {
     intrestsKey = GlobalKey();
     skillsKey = GlobalKey();
+    aboutKey = GlobalKey();
     homeKey = GlobalKey();
     scrollController = ScrollController();
     showFloatingButton = false.obs;
@@ -178,62 +180,69 @@ class _PortfolioState extends State<Portfolio> with TickerProviderStateMixin {
         decoration: const BoxDecoration(
           gradient: CustomColors.backgroundGradient,
         ),
-        child: SingleChildScrollView(
-          controller: scrollController,
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  // Hero Section
-                  HeroSection(width: width),
+        child: Column(
+          children: [
+            // Sticky Navigation Bar
+            ModernNavBar(
+              width: width,
+              skillsKey: skillsKey,
+              intrestsKey: intrestsKey,
+              aboutKey: aboutKey,
+              scrollController: scrollController,
+            ),
 
-                  // About Section
-                  _buildAboutSection(width),
+            // Scrollable Content
+            Expanded(
+              child: SingleChildScrollView(
+                controller: scrollController,
+                child: Column(
+                  children: [
+                    // Hero Section
+                    HeroSection(width: width),
 
-                  // Skills Section
-                  Container(
-                    key: skillsKey,
-                    child: _buildSkillsSection(width),
-                  ),
+                    // About Section
+                    Container(
+                      key: aboutKey,
+                      child: _buildAboutSection(width),
+                    ),
 
-                  // Interests Section
-                  Container(
-                    key: intrestsKey,
-                    child: _buildInterestsSection(width),
-                  ),
+                    // Skills Section
+                    Container(
+                      key: skillsKey,
+                      child: _buildSkillsSection(width),
+                    ),
 
-                  // Divider
-                  Container(
-                    width: width,
-                    height: 1,
-                    margin: const EdgeInsets.symmetric(vertical: 40),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [
-                          Colors.transparent,
-                          CustomColors.primary.withOpacity(0.5),
-                          Colors.transparent,
-                        ],
+                    // Interests Section
+                    Container(
+                      key: intrestsKey,
+                      child: _buildInterestsSection(width),
+                    ),
+
+                    // Divider
+                    Container(
+                      width: width,
+                      height: 1,
+                      margin: const EdgeInsets.symmetric(vertical: 40),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            Colors.transparent,
+                            CustomColors.primary.withOpacity(0.5),
+                            Colors.transparent,
+                          ],
+                        ),
                       ),
                     ),
-                  ),
 
-                  // Footer
-                  Footer(width: width, scrollController: scrollController),
-                ],
+                    // Footer
+                    Footer(width: width, scrollController: scrollController),
+                  ],
+                ),
               ),
-
-              // Modern Navigation Bar
-              ModernNavBar(
-                width: width,
-                skillsKey: skillsKey,
-                intrestsKey: intrestsKey,
-                scrollController: scrollController,
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

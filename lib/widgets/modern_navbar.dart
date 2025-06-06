@@ -7,6 +7,9 @@ class ModernNavBar extends StatefulWidget {
   final ScrollController scrollController;
   final GlobalKey skillsKey;
   final GlobalKey intrestsKey;
+  final GlobalKey? aboutKey;
+  final GlobalKey? projectsKey;
+  final GlobalKey? contactKey;
 
   const ModernNavBar({
     super.key,
@@ -14,6 +17,9 @@ class ModernNavBar extends StatefulWidget {
     required this.scrollController,
     required this.skillsKey,
     required this.intrestsKey,
+    this.aboutKey,
+    this.projectsKey,
+    this.contactKey,
   });
 
   @override
@@ -56,6 +62,7 @@ class _ModernNavBarState extends State<ModernNavBar>
   }
 
   void _onScroll() {
+    // Update sticky navbar visibility
     if (widget.scrollController.offset > 100 && !_isScrolled) {
       setState(() {
         _isScrolled = true;
@@ -64,6 +71,79 @@ class _ModernNavBarState extends State<ModernNavBar>
       setState(() {
         _isScrolled = false;
       });
+    }
+
+    // Auto-update active navigation item based on scroll position
+    _updateActiveNavigation();
+  }
+
+  void _updateActiveNavigation() {
+    final scrollOffset = widget.scrollController.offset;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    int newSelectedIndex = 0; // Default to Home
+
+    // Get section positions dynamically
+    final aboutOffset = _getSectionOffset(widget.aboutKey);
+    final skillsOffset = _getSectionOffset(widget.skillsKey);
+    final interestsOffset = _getSectionOffset(widget.intrestsKey);
+
+    // Define sections with their positions
+    final sections = <Map<String, dynamic>>[];
+
+    // Home section
+    sections.add({'index': 0, 'offset': 0.0});
+
+    // About section
+    if (aboutOffset > 0) {
+      sections.add({'index': 1, 'offset': aboutOffset});
+    }
+
+    // Skills section
+    if (skillsOffset > 0) {
+      sections.add({'index': 2, 'offset': skillsOffset});
+    }
+
+    // Interests/Projects section
+    if (interestsOffset > 0) {
+      sections.add({'index': 3, 'offset': interestsOffset});
+    }
+
+    // Contact section (footer area)
+    sections.add({'index': 4, 'offset': screenHeight * 3.0});
+
+    // Find the current section based on scroll position
+    for (int i = sections.length - 1; i >= 0; i--) {
+      final sectionOffset = sections[i]['offset'] as double;
+      if (scrollOffset >= sectionOffset - 200) {
+        // 200px offset for better UX
+        newSelectedIndex = sections[i]['index'] as int;
+        break;
+      }
+    }
+
+    // Update selected index if changed
+    if (newSelectedIndex != _selectedIndex) {
+      setState(() {
+        _selectedIndex = newSelectedIndex;
+      });
+    }
+  }
+
+  double _getSectionOffset(GlobalKey? key) {
+    if (key?.currentContext == null) return -1.0;
+
+    try {
+      final RenderBox? renderBox =
+          key!.currentContext!.findRenderObject() as RenderBox?;
+      if (renderBox == null) return -1.0;
+
+      final position = renderBox.localToGlobal(Offset.zero);
+      // Since navbar is now outside the scroll view, we just need the scroll position
+      // when this section would be at the top (accounting for navbar height)
+      return position.dy + widget.scrollController.offset - 80;
+    } catch (e) {
+      return -1.0;
     }
   }
 
@@ -76,47 +156,77 @@ class _ModernNavBarState extends State<ModernNavBar>
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 0,
-      left: 0,
-      right: 0,
-      child: FadeTransition(
-        opacity: _fadeAnimation,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          height: 80,
-          decoration: BoxDecoration(
-            color: _isScrolled
-                ? CustomColors.darkBackground.withOpacity(0.8)
-                : Colors.transparent,
-            border: _isScrolled
-                ? Border(
-                    bottom: BorderSide(
-                      color: CustomColors.primary.withOpacity(0.2),
-                      width: 1,
-                    ),
-                  )
-                : null,
-          ),
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Row(
-                children: [
-                  // Logo
-                  _buildLogo(),
-
-                  const Spacer(),
-
-                  // Navigation items (desktop)
-                  if (widget.width > 768) ...[
-                    _buildDesktopNav(),
-                  ] else ...[
-                    // Mobile menu button
-                    _buildMobileMenuButton(),
-                  ],
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        height: 80,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: _isScrolled
+              ? CustomColors.darkBackground.withOpacity(0.95)
+              : CustomColors.darkBackground.withOpacity(0.8),
+          boxShadow: _isScrolled
+              ? [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 15,
+                    offset: const Offset(0, 3),
+                  ),
+                  BoxShadow(
+                    color: CustomColors.primary.withOpacity(0.2),
+                    blurRadius: 25,
+                    offset: const Offset(0, 5),
+                  ),
+                ]
+              : [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 10,
+                    offset: const Offset(0, 2),
+                  ),
                 ],
-              ),
+          border: _isScrolled
+              ? Border(
+                  bottom: BorderSide(
+                    color: CustomColors.primary.withOpacity(0.4),
+                    width: 2,
+                  ),
+                )
+              : Border(
+                  bottom: BorderSide(
+                    color: CustomColors.primary.withOpacity(0.2),
+                    width: 1,
+                  ),
+                ),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Row(
+              children: [
+                // Logo with scroll animation
+                TweenAnimationBuilder<double>(
+                  duration: const Duration(milliseconds: 300),
+                  tween: Tween(begin: 0.0, end: _isScrolled ? 1.0 : 0.0),
+                  builder: (context, value, child) {
+                    return Transform.scale(
+                      scale: 1.0 - (value * 0.1),
+                      child: _buildLogo(),
+                    );
+                  },
+                ),
+
+                const Spacer(),
+
+                // Navigation items (desktop)
+                if (widget.width > 768) ...[
+                  _buildDesktopNav(),
+                ] else ...[
+                  // Mobile menu button
+                  _buildMobileMenuButton(),
+                ],
+              ],
             ),
           ),
         ),
