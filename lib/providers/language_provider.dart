@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:html' as html;
+import 'package:universal_html/html.dart' as html;
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class LanguageProvider extends ChangeNotifier {
   Locale _locale = const Locale('en'); // Domyślnie angielski
@@ -25,13 +27,30 @@ class LanguageProvider extends ChangeNotifier {
         _locale = Locale(savedLanguage);
         notifyListeners();
       } else {
-        // Wykryj język z przeglądarki
-        final browserLanguage = html.window.navigator.language.toLowerCase();
-        if (browserLanguage.startsWith('pl')) {
-          _locale = const Locale('pl');
+        // Wykryj język z systemu
+        String detectedLanguage = 'en'; // domyślnie angielski
+
+        if (kIsWeb) {
+          // Na web używamy navigator
+          final browserLanguage =
+              html.window.navigator.language?.toLowerCase() ?? '';
+          if (browserLanguage.startsWith('pl')) {
+            detectedLanguage = 'pl';
+          }
         } else {
-          _locale = const Locale('en');
+          // Na desktop/mobile używamy locale systemu
+          try {
+            final systemLocale = Platform.localeName.toLowerCase();
+            if (systemLocale.startsWith('pl')) {
+              detectedLanguage = 'pl';
+            }
+          } catch (e) {
+            // Fallback jeśli nie można wykryć locale systemu
+            print('Nie można wykryć locale systemu: $e');
+          }
         }
+
+        _locale = Locale(detectedLanguage);
         // Zapisz wykryty język
         await prefs.setString('language', _locale.languageCode);
         notifyListeners();
