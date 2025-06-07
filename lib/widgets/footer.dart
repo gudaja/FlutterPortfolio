@@ -111,6 +111,18 @@ class Footer extends StatelessWidget {
               ),
             ],
           ),
+
+          const SizedBox(height: 8),
+
+          // App Version
+          Text(
+            'v1.0.0',
+            style: GoogleFonts.inter(
+              color: CustomColors.textMuted.withOpacity(0.7),
+              fontSize: 11,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
         ],
       ),
     );
