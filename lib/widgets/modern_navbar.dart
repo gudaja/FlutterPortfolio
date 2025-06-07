@@ -59,7 +59,7 @@ class _ModernNavBarState extends State<ModernNavBar>
 
     _navAnimationController = AnimationController(
       duration:
-          const Duration(milliseconds: 700), // Długość animacji scrollowania
+          const Duration(milliseconds: 1000), // Długość animacji scrollowania
       vsync: this,
     );
 
@@ -597,7 +597,7 @@ class _ModernNavBarState extends State<ModernNavBar>
         widget.scrollController
             .animateTo(
               0,
-              duration: const Duration(milliseconds: 700),
+              duration: const Duration(milliseconds: 1000),
               curve: Curves.easeInOut,
             )
             .then((_) => _onScrollComplete());
@@ -606,7 +606,7 @@ class _ModernNavBarState extends State<ModernNavBar>
         widget.scrollController
             .animateTo(
               MediaQuery.of(context).size.height * 0.8,
-              duration: const Duration(milliseconds: 700),
+              duration: const Duration(milliseconds: 1000),
               curve: Curves.easeInOut,
             )
             .then((_) => _onScrollComplete());
@@ -615,7 +615,7 @@ class _ModernNavBarState extends State<ModernNavBar>
         if (widget.skillsKey.currentContext != null) {
           Scrollable.ensureVisible(
             widget.skillsKey.currentContext!,
-            duration: const Duration(milliseconds: 700),
+            duration: const Duration(milliseconds: 1000),
             curve: Curves.easeInOut,
           ).then((_) => _onScrollComplete());
         } else {
@@ -626,7 +626,7 @@ class _ModernNavBarState extends State<ModernNavBar>
         if (widget.intrestsKey.currentContext != null) {
           Scrollable.ensureVisible(
             widget.intrestsKey.currentContext!,
-            duration: const Duration(milliseconds: 700),
+            duration: const Duration(milliseconds: 1000),
             curve: Curves.easeInOut,
           ).then((_) => _onScrollComplete());
         } else {
@@ -634,7 +634,7 @@ class _ModernNavBarState extends State<ModernNavBar>
           widget.scrollController
               .animateTo(
                 MediaQuery.of(context).size.height * 2.0,
-                duration: const Duration(milliseconds: 700),
+                duration: const Duration(milliseconds: 1000),
                 curve: Curves.easeInOut,
               )
               .then((_) => _onScrollComplete());
@@ -644,7 +644,7 @@ class _ModernNavBarState extends State<ModernNavBar>
         if (widget.contactKey?.currentContext != null) {
           Scrollable.ensureVisible(
             widget.contactKey!.currentContext!,
-            duration: const Duration(milliseconds: 700),
+            duration: const Duration(milliseconds: 1000),
             curve: Curves.easeInOut,
           ).then((_) => _onScrollComplete());
         } else {
@@ -652,7 +652,7 @@ class _ModernNavBarState extends State<ModernNavBar>
           widget.scrollController
               .animateTo(
                 widget.scrollController.position.maxScrollExtent,
-                duration: const Duration(milliseconds: 700),
+                duration: const Duration(milliseconds: 1000),
                 curve: Curves.easeInOut,
               )
               .then((_) => _onScrollComplete());
