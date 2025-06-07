@@ -33,9 +33,12 @@ class ModernNavBar extends StatefulWidget {
 class _ModernNavBarState extends State<ModernNavBar>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
+  late AnimationController _navAnimationController;
   late Animation<double> _fadeAnimation;
+  late Animation<double> _navAnimation;
   bool _isScrolled = false;
   int _selectedIndex = 0;
+  double _animatedSelectedIndex = 0.0; // Animowana pozycja
   bool _isManualScrolling = false; // Flaga dla manual scroll
 
   List<NavItem> _getNavItems(AppLocalizations l10n) => [
@@ -54,6 +57,12 @@ class _ModernNavBarState extends State<ModernNavBar>
       vsync: this,
     );
 
+    _navAnimationController = AnimationController(
+      duration:
+          const Duration(milliseconds: 700), // Długość animacji scrollowania
+      vsync: this,
+    );
+
     _fadeAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
@@ -61,6 +70,22 @@ class _ModernNavBarState extends State<ModernNavBar>
       parent: _animationController,
       curve: Curves.easeInOut,
     ));
+
+    _navAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _navAnimationController,
+      curve: Curves.easeInOut,
+    ));
+
+    _navAnimation.addListener(() {
+      if (!mounted) return;
+      setState(() {
+        // Aktualizuj animowaną pozycję podczas animacji
+        _animatedSelectedIndex = _navAnimation.value;
+      });
+    });
 
     widget.scrollController.addListener(_onScroll);
     _animationController.forward();
@@ -132,6 +157,9 @@ class _ModernNavBarState extends State<ModernNavBar>
     if (newSelectedIndex != _selectedIndex) {
       setState(() {
         _selectedIndex = newSelectedIndex;
+        if (!_isManualScrolling) {
+          _animatedSelectedIndex = newSelectedIndex.toDouble();
+        }
       });
     }
   }
@@ -156,6 +184,7 @@ class _ModernNavBarState extends State<ModernNavBar>
   @override
   void dispose() {
     _animationController.dispose();
+    _navAnimationController.dispose();
     widget.scrollController.removeListener(_onScroll);
     super.dispose();
   }
@@ -316,6 +345,7 @@ class _ModernNavBarState extends State<ModernNavBar>
             item.icon,
             isSelected,
             () => _onNavItemTap(index),
+            index,
           );
         }).toList(),
       ),
@@ -327,17 +357,34 @@ class _ModernNavBarState extends State<ModernNavBar>
     IconData icon,
     bool isSelected,
     VoidCallback onTap,
+    int itemIndex,
   ) {
+    // Oblicz intensity animacji dla tego elementu
+    final animationDistance = (_animatedSelectedIndex - itemIndex).abs();
+    final isAnimating = _isManualScrolling && animationDistance < 1.0;
+    final animationIntensity = isAnimating ? (1.0 - animationDistance) : 0.0;
+    // Używaj animacji intensity dla smooth przejścia
+    final effectiveSelected = isSelected || animationIntensity > 0.1;
+    final gradientOpacity = isSelected ? 1.0 : animationIntensity;
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       margin: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
-        gradient: isSelected ? CustomColors.primaryGradient : null,
+        gradient: effectiveSelected
+            ? LinearGradient(
+                colors: CustomColors.primaryGradient.colors
+                    .map((color) => color.withOpacity(gradientOpacity))
+                    .toList(),
+                begin: CustomColors.primaryGradient.begin,
+                end: CustomColors.primaryGradient.end,
+              )
+            : null,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: isSelected
+        boxShadow: effectiveSelected
             ? [
                 BoxShadow(
-                  color: CustomColors.primary.withOpacity(0.4),
+                  color:
+                      CustomColors.primary.withOpacity(0.4 * gradientOpacity),
                   blurRadius: 15,
                   offset: const Offset(0, 5),
                 ),
@@ -360,18 +407,30 @@ class _ModernNavBarState extends State<ModernNavBar>
                 Icon(
                   icon,
                   size: 18,
-                  color: isSelected
-                      ? CustomColors.darkBackground
+                  color: effectiveSelected
+                      ? Color.lerp(
+                          CustomColors.textSecondary,
+                          CustomColors.darkBackground,
+                          gradientOpacity,
+                        )
                       : CustomColors.textSecondary,
                 ),
-                if (isSelected) ...[
+                if (effectiveSelected && gradientOpacity > 0.5) ...[
                   const SizedBox(width: 8),
-                  Text(
-                    title,
-                    style: GoogleFonts.inter(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: CustomColors.darkBackground,
+                  AnimatedOpacity(
+                    opacity: gradientOpacity,
+                    duration: const Duration(milliseconds: 200),
+                    child: Text(
+                      title,
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Color.lerp(
+                          CustomColors.textSecondary,
+                          CustomColors.darkBackground,
+                          gradientOpacity,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -418,18 +477,53 @@ class _ModernNavBarState extends State<ModernNavBar>
   }
 
   void _onNavItemTap(int index) {
+    // Sprawdź czy widget nie jest w trakcie niszczenia
+    if (!mounted) return;
+
     // Włącz flagę manual scrolling
     _isManualScrolling = true;
 
     // Ustaw docelowy index
     final targetIndex = index;
+    final startIndex = _selectedIndex;
+
+    // Skonfiguruj animację nawigacji
+    _navAnimation = Tween<double>(
+      begin: startIndex.toDouble(),
+      end: targetIndex.toDouble(),
+    ).animate(CurvedAnimation(
+      parent: _navAnimationController,
+      curve: Curves.easeInOut,
+    ));
+
+    // Uruchom animację nawigacji - sprawdź czy controller jest zainicjalizowany
+    try {
+      _navAnimationController.forward(from: 0.0);
+    } catch (e) {
+      // Fallback jeśli animacja nie może być uruchomiona
+      setState(() {
+        _selectedIndex = targetIndex;
+        _animatedSelectedIndex = targetIndex.toDouble();
+        _isManualScrolling = false;
+      });
+      return;
+    }
 
     // Funkcja callback po zakończeniu animacji
     void _onScrollComplete() {
+      if (!mounted) return;
+
       setState(() {
         _selectedIndex = targetIndex;
+        _animatedSelectedIndex = targetIndex.toDouble();
         _isManualScrolling = false;
       });
+
+      try {
+        _navAnimationController.reset();
+      } catch (e) {
+        // Ignoruj błąd jeśli controller jest już zdisposowany
+      }
     }
 
     // Handle navigation based on index
