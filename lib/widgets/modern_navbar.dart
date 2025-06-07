@@ -81,10 +81,7 @@ class _ModernNavBarState extends State<ModernNavBar>
 
     _navAnimation.addListener(() {
       if (!mounted) return;
-      setState(() {
-        // Aktualizuj animowaną pozycję podczas animacji
-        _animatedSelectedIndex = _navAnimation.value;
-      });
+      // Listener jest konfigurowany dynamicznie w _onNavItemTap
     });
 
     widget.scrollController.addListener(_onScroll);
@@ -157,6 +154,7 @@ class _ModernNavBarState extends State<ModernNavBar>
     if (newSelectedIndex != _selectedIndex) {
       setState(() {
         _selectedIndex = newSelectedIndex;
+        // Synchronizuj TYLKO gdy nie ma aktywnej animacji nawigacji
         if (!_isManualScrolling) {
           _animatedSelectedIndex = newSelectedIndex.toDouble();
         }
@@ -333,21 +331,100 @@ class _ModernNavBarState extends State<ModernNavBar>
           ),
         ],
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: navItems.asMap().entries.map((entry) {
-          final index = entry.key;
-          final item = entry.value;
-          final isSelected = _selectedIndex == index;
+      child: Stack(
+        children: [
+          // Animowany wskaźnik tła
+          _buildAnimatedIndicator(navItems),
+          // Row z elementami nav
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: navItems.asMap().entries.map((entry) {
+              final index = entry.key;
+              final item = entry.value;
+              final isSelected = _selectedIndex == index;
 
-          return _buildNavItem(
-            item.title,
-            item.icon,
-            isSelected,
-            () => _onNavItemTap(index),
-            index,
-          );
-        }).toList(),
+              return _buildNavItem(
+                item.title,
+                item.icon,
+                isSelected,
+                () => _onNavItemTap(index),
+                index,
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAnimatedIndicator(List<NavItem> navItems) {
+    // Uproszczone podejście - używamy stałych szerokości
+    const itemBaseWidth = 58.0; // ikona + padding (20*2 + 18)
+    const textMultiplier = 8.0; // pikseli na znak
+    const spaceBetweenIconText = 8.0;
+    const itemMargin = 8.0; // margin po obu stronach
+
+    // Oblicz szerokości wszystkich elementów
+    final itemWidths = navItems.asMap().entries.map((entry) {
+      final index = entry.key;
+      final item = entry.value;
+      double width = itemBaseWidth + itemMargin;
+
+      // Sprawdź czy ten element powinien pokazywać tekst
+      final distance = (_animatedSelectedIndex - index).abs();
+      final shouldShowText = index == _selectedIndex || distance < 0.5;
+
+      if (shouldShowText) {
+        width += spaceBetweenIconText + (item.title.length * textMultiplier);
+      }
+      return width;
+    }).toList();
+
+    // Oblicz pozycję wskaźnika
+    double indicatorPosition = 0.0;
+    for (int i = 0; i < _animatedSelectedIndex.floor(); i++) {
+      indicatorPosition += itemWidths[i];
+    }
+
+    // Interpolacja pozycji podczas animacji
+    final positionFraction =
+        _animatedSelectedIndex - _animatedSelectedIndex.floor();
+    if (positionFraction > 0 &&
+        _animatedSelectedIndex.floor() + 1 < itemWidths.length) {
+      indicatorPosition +=
+          itemWidths[_animatedSelectedIndex.floor()] * positionFraction;
+    }
+
+    // Animowana szerokość wskaźnika
+    final currentIndex = _animatedSelectedIndex.floor();
+    final nextIndex =
+        (_animatedSelectedIndex.ceil()).clamp(0, itemWidths.length - 1);
+    final widthFraction = _animatedSelectedIndex - currentIndex;
+
+    double indicatorWidth;
+    if (currentIndex == nextIndex) {
+      indicatorWidth = itemWidths[currentIndex];
+    } else {
+      // Interpolacja między obecną a następną szerokością
+      indicatorWidth = itemWidths[currentIndex] * (1 - widthFraction) +
+          itemWidths[nextIndex] * widthFraction;
+    }
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 100),
+      transform: Matrix4.translationValues(indicatorPosition, 0, 0),
+      width: indicatorWidth,
+      height: 44, // Wysokość elementu nav
+      decoration: BoxDecoration(
+        gradient: CustomColors.primaryGradient,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: CustomColors.primary.withOpacity(0.4),
+            blurRadius: 15,
+            offset: const Offset(0, 5),
+          ),
+        ],
       ),
     );
   }
@@ -359,38 +436,13 @@ class _ModernNavBarState extends State<ModernNavBar>
     VoidCallback onTap,
     int itemIndex,
   ) {
-    // Oblicz intensity animacji dla tego elementu
-    final animationDistance = (_animatedSelectedIndex - itemIndex).abs();
-    final isAnimating = _isManualScrolling && animationDistance < 1.0;
-    final animationIntensity = isAnimating ? (1.0 - animationDistance) : 0.0;
-    // Używaj animacji intensity dla smooth przejścia
-    final effectiveSelected = isSelected || animationIntensity > 0.1;
-    final gradientOpacity = isSelected ? 1.0 : animationIntensity;
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
+    // Sprawdź czy wskaźnik jest blisko tego elementu (dla animacji)
+    final distance = (_animatedSelectedIndex - itemIndex).abs();
+    final isNearIndicator = distance < 0.5; // Wskaźnik jest blisko
+    final shouldShowText = isSelected || isNearIndicator;
+
+    return Container(
       margin: const EdgeInsets.symmetric(horizontal: 4),
-      decoration: BoxDecoration(
-        gradient: effectiveSelected
-            ? LinearGradient(
-                colors: CustomColors.primaryGradient.colors
-                    .map((color) => color.withOpacity(gradientOpacity))
-                    .toList(),
-                begin: CustomColors.primaryGradient.begin,
-                end: CustomColors.primaryGradient.end,
-              )
-            : null,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: effectiveSelected
-            ? [
-                BoxShadow(
-                  color:
-                      CustomColors.primary.withOpacity(0.4 * gradientOpacity),
-                  blurRadius: 15,
-                  offset: const Offset(0, 5),
-                ),
-              ]
-            : null,
-      ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -407,30 +459,20 @@ class _ModernNavBarState extends State<ModernNavBar>
                 Icon(
                   icon,
                   size: 18,
-                  color: effectiveSelected
-                      ? Color.lerp(
-                          CustomColors.textSecondary,
-                          CustomColors.darkBackground,
-                          gradientOpacity,
-                        )
+                  color: isSelected
+                      ? CustomColors.darkBackground
                       : CustomColors.textSecondary,
                 ),
-                if (effectiveSelected && gradientOpacity > 0.5) ...[
+                if (shouldShowText) ...[
                   const SizedBox(width: 8),
-                  AnimatedOpacity(
-                    opacity: gradientOpacity,
-                    duration: const Duration(milliseconds: 200),
-                    child: Text(
-                      title,
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Color.lerp(
-                          CustomColors.textSecondary,
-                          CustomColors.darkBackground,
-                          gradientOpacity,
-                        ),
-                      ),
+                  Text(
+                    title,
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: isSelected
+                          ? CustomColors.darkBackground
+                          : CustomColors.textSecondary,
                     ),
                   ),
                 ],
@@ -496,6 +538,16 @@ class _ModernNavBarState extends State<ModernNavBar>
       curve: Curves.easeInOut,
     ));
 
+    // Dodaj listener który aktualizuje pozycję wskaźnika podczas animacji
+    void animationListener() {
+      if (!mounted) return;
+      setState(() {
+        _animatedSelectedIndex = _navAnimation.value;
+      });
+    }
+
+    _navAnimation.addListener(animationListener);
+
     // Uruchom animację nawigacji - sprawdź czy controller jest zainicjalizowany
     try {
       _navAnimationController.forward(from: 0.0);
@@ -513,10 +565,12 @@ class _ModernNavBarState extends State<ModernNavBar>
     void _onScrollComplete() {
       if (!mounted) return;
 
+      // Usuń listener animacji
+      _navAnimation.removeListener(animationListener);
+
       setState(() {
         _selectedIndex = targetIndex;
         _animatedSelectedIndex = targetIndex.toDouble();
-        _isManualScrolling = false;
       });
 
       try {
@@ -524,6 +578,17 @@ class _ModernNavBarState extends State<ModernNavBar>
       } catch (e) {
         // Ignoruj błąd jeśli controller jest już zdisposowany
       }
+
+      // Opóźnij resetowanie flagi manual scrolling aby zapobiec natychmiastowemu override
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (mounted) {
+          setState(() {
+            _isManualScrolling = false;
+            // Upewnij się, że animatedSelectedIndex jest zsynchronizowany z finalną pozycją
+            _animatedSelectedIndex = _selectedIndex.toDouble();
+          });
+        }
+      });
     }
 
     // Handle navigation based on index
