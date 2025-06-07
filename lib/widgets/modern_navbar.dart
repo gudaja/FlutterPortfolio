@@ -36,6 +36,7 @@ class _ModernNavBarState extends State<ModernNavBar>
   late Animation<double> _fadeAnimation;
   bool _isScrolled = false;
   int _selectedIndex = 0;
+  bool _isManualScrolling = false; // Flaga dla manual scroll
 
   List<NavItem> _getNavItems(AppLocalizations l10n) => [
         NavItem(l10n.home, Icons.home_rounded),
@@ -78,6 +79,9 @@ class _ModernNavBarState extends State<ModernNavBar>
   }
 
   void _updateActiveNavigation() {
+    // Nie aktualizuj podczas manual scrollowania
+    if (_isManualScrolling) return;
+
     final scrollOffset = widget.scrollController.offset;
 
     int newSelectedIndex = 0; // Default to Home
@@ -414,25 +418,39 @@ class _ModernNavBarState extends State<ModernNavBar>
   }
 
   void _onNavItemTap(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    // Włącz flagę manual scrolling
+    _isManualScrolling = true;
+
+    // Ustaw docelowy index
+    final targetIndex = index;
+
+    // Funkcja callback po zakończeniu animacji
+    void _onScrollComplete() {
+      setState(() {
+        _selectedIndex = targetIndex;
+        _isManualScrolling = false;
+      });
+    }
 
     // Handle navigation based on index
     switch (index) {
       case 0: // Home
-        widget.scrollController.animateTo(
-          0,
-          duration: const Duration(milliseconds: 700),
-          curve: Curves.easeInOut,
-        );
+        widget.scrollController
+            .animateTo(
+              0,
+              duration: const Duration(milliseconds: 700),
+              curve: Curves.easeInOut,
+            )
+            .then((_) => _onScrollComplete());
         break;
       case 1: // About
-        widget.scrollController.animateTo(
-          MediaQuery.of(context).size.height * 0.8,
-          duration: const Duration(milliseconds: 700),
-          curve: Curves.easeInOut,
-        );
+        widget.scrollController
+            .animateTo(
+              MediaQuery.of(context).size.height * 0.8,
+              duration: const Duration(milliseconds: 700),
+              curve: Curves.easeInOut,
+            )
+            .then((_) => _onScrollComplete());
         break;
       case 2: // Skills
         if (widget.skillsKey.currentContext != null) {
@@ -440,7 +458,9 @@ class _ModernNavBarState extends State<ModernNavBar>
             widget.skillsKey.currentContext!,
             duration: const Duration(milliseconds: 700),
             curve: Curves.easeInOut,
-          );
+          ).then((_) => _onScrollComplete());
+        } else {
+          _onScrollComplete();
         }
         break;
       case 3: // Projects (Interests section)
@@ -449,14 +469,16 @@ class _ModernNavBarState extends State<ModernNavBar>
             widget.intrestsKey.currentContext!,
             duration: const Duration(milliseconds: 700),
             curve: Curves.easeInOut,
-          );
+          ).then((_) => _onScrollComplete());
         } else {
           // Fallback: scroll to a calculated position
-          widget.scrollController.animateTo(
-            MediaQuery.of(context).size.height * 2.0,
-            duration: const Duration(milliseconds: 700),
-            curve: Curves.easeInOut,
-          );
+          widget.scrollController
+              .animateTo(
+                MediaQuery.of(context).size.height * 2.0,
+                duration: const Duration(milliseconds: 700),
+                curve: Curves.easeInOut,
+              )
+              .then((_) => _onScrollComplete());
         }
         break;
       case 4: // Contact
@@ -465,14 +487,16 @@ class _ModernNavBarState extends State<ModernNavBar>
             widget.contactKey!.currentContext!,
             duration: const Duration(milliseconds: 700),
             curve: Curves.easeInOut,
-          );
+          ).then((_) => _onScrollComplete());
         } else {
           // Fallback: scroll to bottom
-          widget.scrollController.animateTo(
-            widget.scrollController.position.maxScrollExtent,
-            duration: const Duration(milliseconds: 700),
-            curve: Curves.easeInOut,
-          );
+          widget.scrollController
+              .animateTo(
+                widget.scrollController.position.maxScrollExtent,
+                duration: const Duration(milliseconds: 700),
+                curve: Curves.easeInOut,
+              )
+              .then((_) => _onScrollComplete());
         }
         break;
     }
