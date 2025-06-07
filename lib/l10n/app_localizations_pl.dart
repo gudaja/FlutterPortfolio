@@ -24,7 +24,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get mobileAppCreator => 'Twórca Aplikacji Mobilnych';
 
   @override
-  String get uiUxEnthusiast => 'Entuzjasta UI/UX';
+  String get uiUxEnthusiast => 'Entuzjasta Linux';
 
   @override
   String get heroDescription =>
@@ -127,11 +127,11 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get flutterSkillDescription =>
-      'Cross-platform mobile development z Dart. Tworzenie nowoczesnych aplikacji iOS i Android.';
+      'Cross-platform mobile development z Dart. Tworzenie nowoczesnych aplikacji iOS , Android, web, Linux, windows, macos, embedded';
 
   @override
   String get cppSkillDescription =>
-      'Performance-critical applications, game development, system programming, embedded systems.';
+      'Performance-critical applications, system programming, embedded systems.';
 
   @override
   String get golangSkillDescription =>
@@ -139,7 +139,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get linuxSkillDescription =>
-      'System administration, shell scripting, server management, DevOps, automation.';
+      'System administration, shell scripting, server management.';
 
   @override
   String get embeddedSkillDescription =>

@@ -131,7 +131,7 @@ abstract class AppLocalizations {
   /// No description provided for @uiUxEnthusiast.
   ///
   /// In en, this message translates to:
-  /// **'UI/UX Enthusiast'**
+  /// **'Linux Enthusiast'**
   String get uiUxEnthusiast;
 
   /// No description provided for @heroDescription.
@@ -329,13 +329,13 @@ abstract class AppLocalizations {
   /// No description provided for @flutterSkillDescription.
   ///
   /// In en, this message translates to:
-  /// **'Cross-platform mobile development with Dart. Creating modern iOS and Android applications.'**
+  /// **'Cross-platform mobile development with Dart. Creating modern iOS, Android, web, Linux, Windows, macOS, embedded applications.'**
   String get flutterSkillDescription;
 
   /// No description provided for @cppSkillDescription.
   ///
   /// In en, this message translates to:
-  /// **'Performance-critical applications, game development, system programming, embedded systems.'**
+  /// **'Performance-critical applications, system programming, embedded systems.'**
   String get cppSkillDescription;
 
   /// No description provided for @golangSkillDescription.
@@ -347,7 +347,7 @@ abstract class AppLocalizations {
   /// No description provided for @linuxSkillDescription.
   ///
   /// In en, this message translates to:
-  /// **'System administration, shell scripting, server management, DevOps, automation.'**
+  /// **'System administration, shell scripting, server management.'**
   String get linuxSkillDescription;
 
   /// No description provided for @embeddedSkillDescription.
